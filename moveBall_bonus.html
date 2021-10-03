@@ -1,0 +1,68 @@
+<div id="ball" style="
+  z-index:5;
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:green"></div>
+<script src="script.js"></script>
+<script>
+var velocityX = 5;
+var velocityY = 3;
+var positionX = 0;
+var positionY = 0;
+var xDirection = true;
+var yDirection = true;
+var ball = document.getElementById('ball');
+
+const mass = {
+  "Aluminum" : {"weight":2700,"color":"silver"},
+  "Butter" : {"weight":870,"color":"yellow"},
+  "Lead" : {"weight":11.350,"color":"orange"},
+  "Pressed wood " : {"weight":190,"color":"brown"},
+}
+const time = 20;
+const gravity = 9.8;
+// YOUR CODE 
+// ----------------
+function moveBall(){
+  if(positionX >= window.innerWidth) {
+    xDirection = false;
+  }
+  if(positionX <= 0){
+    xDirection = true;
+  }
+  if(xDirection){
+    positionX = positionX + velocityX;
+  }
+  else{
+    positionX = positionX - velocityX;
+  }
+  if(positionY>= window.innerHeight) {
+    yDirection = false;
+  }
+  if(positionY<=0){
+    yDirection = true;
+  }
+  if(yDirection){
+    positionY = positionY + velocityY;
+  }
+  else{
+    positionY = positionY - velocityY;
+  }
+  
+  ball.style.left = positionX +'px';
+  ball.style.top = positionY +'px';
+}
+function gravity(obj){
+  obj.velocityY = obj.velocityY - (v*getMass(obj))*time;
+}
+function getMass(obj){
+  let r = obj.style.width/2;
+  let v = 4/3 * Math.PI*Math.pow(r,3);
+ return mass['content'].weight * v;
+}
+setInterval(moveBall,time);
+</script>

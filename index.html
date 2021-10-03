@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script>
+        const time = 120;
+        const gravity = 9.8;
+        let velocity = 100;
+        var elements = {
+           "b1":{
+               "obj":new ball("b1","Aluminum",30),
+               "timer":Object,
+
+            },
+            "b2":{
+                "obj":new ball("b2","Titanium",50),
+                "timer":Object,
+            },
+            "b3":{
+                "obj":new ball("b3","Wood",79),
+                "timer":Object,
+            },
+            "b4":{
+                "obj":new ball("b4","Iron",50),
+                "timer":Object,
+
+            },
+            "b5":{
+                "obj":new ball("b5","Wood",30),
+                "timer":Object,
+            },
+            "b6":{
+                "obj":new ball("b6","Wood",80),
+                "timer":Object,
+            },
+            "b7":{
+                "obj":new ball("b7","Steel",20),
+                "timer":Object,
+            },
+            "b8":{
+               "obj":new ball("b8","Aluminum",40),
+               "timer":Object,
+
+            },
+        }
+        function start(){
+            for(let obj in elements){
+                
+                elements[obj].obj.throwBall(45,velocity);
+                console.log(elements[obj].obj.velocityX,elements[obj].obj.velocityY,velocity);
+                elements[obj].timer=setInterval(move,time,elements[obj]);
+            }
+            
+        }
+       async function move(obj){
+            if(parseInt(obj.obj.element.style.top)>window.innerHeight){
+                obj.obj.element.style.top = window.innerHeight;
+                clearTimeout( obj.timer);
+            }
+            else{
+                obj.obj.motion();
+            }
+        }
+        start();
+        
+
+    </script>
+    <div class = 'text'>
+
+    </div>
+</body>
+</html>
