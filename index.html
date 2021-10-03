@@ -52,17 +52,25 @@
         }
         function start(){
             for(let obj in elements){
+                let rand = getRandomInt(0,180);
+                console.log(rand);
                 
-                elements[obj].obj.throwBall(45,velocity);
-                console.log(elements[obj].obj.velocityX,elements[obj].obj.velocityY,velocity);
+                elements[obj].obj.throwBall(rand,velocity);
                 elements[obj].timer=setInterval(move,time,elements[obj]);
             }
             
         }
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+        }
+
        async function move(obj){
-            if(parseInt(obj.obj.element.style.top)>window.innerHeight){
+            if(parseInt(obj.obj.element.style.top)+obj.obj.element.style.height>=window.innerHeight){
                 obj.obj.element.style.top = window.innerHeight;
                 clearTimeout( obj.timer);
+                console.log(obj.obj.element.id);
             }
             else{
                 obj.obj.motion();

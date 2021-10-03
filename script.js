@@ -7,20 +7,20 @@ class ball {
         elem.id = element;  
         elem.style.width = diameter +'px';
         elem.style.height = diameter +'px';
-        elem.style.left = 0;
-        elem.style.top = 0;
+        elem.style.left = '50%';
+        elem.style.top = 20+'px';
         document.body.appendChild(elem);  
         this.element = document.getElementById(element); 
         this.obj = obj; 
     }
     throwBall(deg,force){
-        this.element.velocityX = force;
-        this.element.velocityY = 0;
+        this.element.velocityX = force*Math.cos(deg);
+        this.element.velocityY = force*Math.sin(deg);
         this.element.directionX = true;
         this.element.directionY = true;
     }
     motion(){
-       if(window.innerWidth < parseInt(this.element.style.left)){
+       if(window.innerWidth <= parseInt(this.element.style.left)){
            this.element.directionX = false;
        } 
        if(parseInt(this.element.style.left) < 0){
@@ -28,31 +28,43 @@ class ball {
        }
        if(this.element.directionX){
 
-           this.element.style.left = `${parseInt(this.element.style.left) + this.element.velocityX}px`;
+           this.element.style.left = parseInt(this.element.style.left) + this.element.velocityX+'px';
            
        }
        else{
-           this.element.style.left = parseInt(this.element.style.left) - this.element.valocityX + 'px';
+           this.element.style.left = parseInt(this.element.style.left) - this.element.velocityX + 'px';
        }
        if(window.innerHeight <= parseInt(this.element.style.top)){
           this.element.directionY = false;
        }
-       if(parseInt(this.element.style.top) <= 0 || this.element.valocityY < 0){
+       if(parseInt(this.element.style.top) < 0){
            this.element.directionY = true;
        }
        if(this.element.directionY){
-        this.element.valocityY = this.element.valocityY + this.getGravity();
-
-        this.element.style.top = parseInt(this.element.style.top) +  this.element.valocityY +'px';
-        console.log(this.element.valocityX,this.element.valocityY);
+        this.element.velocityY = this.element.velocityY + this.getGravity();
+        
+       if(this.element.velocityY + parseInt(this.element.style.top)>window.innerHeight ){
+           let dif = window.innerHeight - parseInt(this.element.style.top);
+           this.element.style.top = parseInt(this.element.style.top)+dif;
+           this.element.directionY = false;
+       }
+       else{
+        this.element.style.top = parseInt(this.element.style.top) +  this.element.velocityY +'px';
+       }
         
        }
        else{
-        this.element.valocityY = this.element.valocityY - this.getGravity();
-           this.element.style.top = parseInt(this.element.style.top) - this.element.valocityY + 'px';
+           if(this.element.velocityY > this.getGravity){
+           this.element.velocityY = this.element.velocityY - this.getGravity();
+           this.element.style.top = parseInt(this.element.style.top) - this.element.velocityY + 'px';
+           }
+           else{
+               this.element.velocityX = this.element.velocityX/2;
+           }
        }
-       if(Math.abs(this.element.valocityY)<=gravity){
-          this.element.valocityY=0;
+       if(this.element.velocityY<=this.getGravity()&&this.element.style.top>0){
+         this.element.velocityY=0;
+         this.element.velocityX = this.element.velocityX - this.element.velocityX /2;
        }
     
     }
